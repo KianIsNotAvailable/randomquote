@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+</head>
+<body>
+    <div class="card">
+        <h1>Random Quote</h1>
+        <button class="btn">Generate Quote</button>
+        <p class="quote">quote</p>
+    </div>
+
+
+    <script>
+const button = document.querySelector(".btn"); // links the button to the html
+let array = 0; // makes an array which will be used to randomly select one of the arrays later
+
+async function quoteGenerate(){ //the function to get the api data
+  const response = await fetch("https://type.fit/api/quotes"); //api link
+  let data = await response.json(); // returns the data in json format
+  console.log(data);
+
+document.querySelector(".quote").innerHTML = data[array].text + " - " + data[array].author.split(",").shift();
+  // changes the inner html where it says quote. data[randomnumber out of 15 - 15 possible quotes. then text for the quote
+  // then the author with .split(",").shift() - this splits the author at the , so it doesnt say type.fit after
+  //.shift keeps before the , where as .pop would leave after the ,
+
+
+
+
+}
+quoteGenerate();
+button.addEventListener("click", () =>{
+    quoteGenerate(); // when the button is clicked the function is called. array is set to a random number giving a random quote
+    array = Math.floor(Math.random() * 16);});
+    </script>
+</body>
+</html>
